@@ -1,7 +1,7 @@
 /********* GLOBAL CONSTANTS *********/
 
 /** CHANGE THIS WHEN DEPLOYED */
-const ROOT = "/";
+const ROOT = "/cheffin-it-up/";
 
 // first id and key that we were using
 // const APP_ID = '22fddf2c';
