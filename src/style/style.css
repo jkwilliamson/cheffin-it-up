@@ -1,0 +1,128 @@
+:root {
+  --bs-body-font-family: Verdana;
+}
+
+.nav-bar {
+  background: #198754;
+  padding: 15px 20px;
+  color: white;
+}
+
+.nav-bar img {
+  max-height: 30px;
+}
+
+#login-box, #welcome-box {
+  max-width: 400px;
+}
+
+#login-box input:focus:invalid {
+  outline: 2px solid #DC3545;
+}
+
+.recipe-card {
+  max-width: 500px;
+  margin: 40px auto;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn:hover, .nav-link:hover, .recipe-card:hover, .recipe-row:hover {
+  filter: brightness(90%);
+  transform: translateY(-2px);
+  transition: all 0.2s ease-in-out;
+}
+
+.btn:focus, .nav-link:focus, .form-control:focus, .recipe-row:focus {
+  outline: 3px solid #198754;
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.recipe-card:hover, .recipe-row:hover {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15) !important;
+  cursor: pointer;
+}
+
+#query-results.list-layout {
+  flex-direction: column;
+  align-items: center;
+}
+
+#query-results.list-layout .recipe-card.sm {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+}
+
+#query-results.list-layout .recipe-card.sm img {
+  width: 200px;
+  height: 150px;
+}
+
+.recipe-card img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+}
+
+.recipe-card.sm {
+  margin: 0;
+  height: 240px;
+  width: 240px;
+}
+
+.recipe-card.sm img {
+  height: 150px;
+}
+
+.recipe-header {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.recipe-star {
+  cursor: pointer;
+}
+
+.main-img {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+
+.stat-box {
+  background: #f1f8f1;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 10px;
+  border: 1px solid #d4e9d4;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
+
+@media (min-width: 992px) {
+  /* copied from bootstrap border-end */
+  .border-lg-end {
+    border-right: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: rgb(222, 226, 230);
+  }
+
+  .border-lg-top-0 {
+    border-top: 0 !important;
+  }
+}

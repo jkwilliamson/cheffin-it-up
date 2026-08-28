@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cheffin' It Up - Recipe Search</title>
+  <link rel="icon" href="https://fav.mhciael.com/👨‍🍳">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="../../style/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/i18next@23.11.0/dist/umd/i18next.min.js"></script>
+  <script src="../../js/mock_api.js"></script>
+  <script src="../../js/main.js"></script>
+  <script src="recipe-search.js"></script>
+</head>
+
+<body>
+  <nav class="nav-bar d-flex flex-sm-row flex-column align-items-center pe-sm-1">
+    <h1 class="fs-4 m-0 fw-bold">Cheffin' It Up</h1>
+    <a href="../../" data-i18n="nav_home" class="nav-link text-white ms-sm-4">Home</a>
+    <a href="" data-i18n="nav_search" class="nav-link text-white ms-sm-3">Recipe Search</a>
+    <a href="../../account/" id="username-nav-link" class="d-flex align-items-center justify-content-sm-end justify-content-center ms-sm-auto me-sm-2 m-0 nav-link text-white ">
+      <span id="username-nav-name"></span>
+      <img id="username-nav-img" class="rounded-circle ms-2 d-none" src="" height="30" width="30" alt="Profile picture">
+    </a>
+    <div class="ms-3">
+      <button class="btn btn-sm btn-outline-light" onclick="changeLanguage('en')">EN</button>
+      <button class="btn btn-sm btn-outline-light" onclick="changeLanguage('fr')">FR</button>
+    </div>
+  </nav>
+
+  <main class="py-4">
+    <!-- <a href="../../" class="btn btn-outline-secondary ms-4" aria-hidden="true">← Back to Home</a> -->
+
+    <header class="d-flex flex-column align-items-center text-center">
+      <h1 class="mb-3" data-i18n="recipe-search">Recipe Search</h1>
+      <form class="d-flex flex-column align-items-center gap-2">
+        <div class="input-group w-100 shadow-sm">
+          <label for="r-query" class="visually-hidden">Search</label>
+          <input type="text" id="r-query" data-i18n="[placeholder]search" class="form-control rounded-start shadow-none"
+            placeholder="Find your next meal">
+          <button id="search-btn" class="btn btn-primary" type="submit">🔎︎</button>
+        </div>
+        <div class="d-flex gap-3">
+          <div>
+            <label for="filter-meal" class="form-label mb-1 small fw-bold" data-i18n="meal-type">Meal Type</label>
+            <select id="filter-meal" class="form-select form-select-sm shadow-sm">
+              <option value="">Any</option>
+              <option value="breakfast">Breakfast</option>
+              <option value="lunch/dinner">Lunch/Dinner</option>
+              <option value="snack">Snack</option>
+            </select>
+          </div>
+          <div>
+            <label for="filter-diet" class="form-label mb-1 small fw-bold" data-i18n="diet">Diet</label>
+            <select id="filter-diet" class="form-select form-select-sm shadow-sm">
+              <option value="">Any</option>
+              <option value="balanced">Balanced</option>
+              <option value="high-fiber">High Fiber</option>
+              <option value="high-protein">High Protein</option>
+              <option value="low-carb">Low Carb</option>
+              <option value="low-fat">Low Fat</option>
+              <option value="low-sodium">Low Sodium</option>
+            </select>
+          </div>
+        </div>
+      </form>
+      <div class="d-flex justify-content-center my-4">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-outline-success active" id="grid-view-btn" data-i18n="grid-view">Grid View</button>
+          <button type="button" class="btn btn-outline-success" id="list-view-btn" data-i18n="list-view">List View</button>
+        </div>
+      </div>
+    </header>
+
+    <!--<div class="d-flex justify-content-center my-4">
+      <div class="btn-group" role="group">
+        <button type="button" class="btn btn-outline-success active" id="grid-view-btn" data-i18n="grid-view">Grid View</button>
+        <button type="button" class="btn btn-outline-success" id="list-view-btn" data-i18n="list-view">List View</button>
+      </div>
+    </div> -->
+    
+    <section id="grid-output" class="m-3 d-flex flex-row flex-wrap justify-content-center" aria-hidden="true">
+
+    </section>
+
+    <section class="m-3">
+      <table id="list-output-table" class="table d-none" aria-hidden="true">
+        <thead>
+          <tr>
+            <th data-i18n="name">Name</th>
+            <th data-i18n="meal">Meal</th>
+            <th data-i18n="diet">Diet</th>
+            <th>Calories</th>
+          </tr>
+        </thead>
+        <tbody id="list-output-body">
+
+        </tbody>
+      </table>
+    </section>
+
+    <div class="d-flex justify-content-center py-5">
+      <button id="load-more-btn" class="btn btn-success d-none" data-i18n="load-more">Load More Recipes</button>
+    </div>
+  </main>
+
+  <template id="card-template">
+    <a class="text-decoration-none m-3" target="_blank" rel="noopener noreferrer">
+      <figure class="recipe-card sm shadow-sm position-relative">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" alt="" class="img-fluid">
+        <svg class="recipe-star position-absolute top-0 end-0 m-2 bg-white rounded-circle p-1 d-none" width="36"
+          height="36" fill="none" stroke="#0d6efd" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round"
+          stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+          <polygon
+            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+        </svg>
+        <figcaption class="p-3 pb-5 bg-white text-dark text-capitalize fw-bold" data-i18n="loading">Loading...</figcaption>
+      </figure>
+    </a>
+  </template>
+
+  <template id="row-template">
+    <tr class="text-capitalize recipe-row" role="link" data-recipe-id="">
+      <td class="fw-bold">
+        <svg class="recipe-star bg-white rounded-circle p-1 d-none" width="24"
+          height="24" fill="none" stroke="#0d6efd" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round"
+          stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+          <polygon
+            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+        </svg>
+      </td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </template>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
