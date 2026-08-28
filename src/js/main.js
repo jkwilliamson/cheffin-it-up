@@ -251,8 +251,8 @@ function updateUser(updatedUser) {
     }
   }
 
-  trySetItem("currentUser", JSON.stringify(updatedUser));
-  trySetItem("users", JSON.stringify(updatedUsers));
+  localStorage.setItem("currentUser", JSON.stringify(updatedUser));
+  localStorage.setItem("users", JSON.stringify(updatedUsers));
 }
 
 /**
